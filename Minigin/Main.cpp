@@ -32,6 +32,10 @@ static void load()
 	to->SetColor({ 255, 255, 0, 255 });
 	to->SetPosition(292, 20);
 	scene.Add(std::move(to));
+
+	auto test = std::make_unique<dae::GameObject>();
+	test->AddComponent<dae::RenderComponent>();
+	scene.Add(std::move(test));
 }
 
 int main(int, char*[]) {

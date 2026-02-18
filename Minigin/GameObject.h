@@ -1,15 +1,18 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <ranges>
 #include "Transform.h"
+#include "Component.h"
 
 namespace dae
 {
 	class Texture2D;
-	class GameObject 
+	class GameObject
 	{
 		Transform m_transform{};
 		std::shared_ptr<Texture2D> m_texture{};
+		std::vector<std::shared_ptr<BaseComponent>> m_components{};
 	public:
 		virtual void Update();
 		virtual void Render() const;
@@ -23,5 +26,49 @@ namespace dae
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
+
+		template <std::derived_from<BaseComponent> T>
+		void AddComponent()
+		{
+			m_components.push_back(std::make_shared<T>());
+		}
+
+		template <std::derived_from<BaseComponent> T>
+		void RemoveComponent()
+		{
+
+		}
+
+		template <std::derived_from<BaseComponent> T>
+		std::shared_ptr<T> GetComponent()
+		{
+
+		}
+
+		template <std::derived_from<BaseComponent> T>
+		bool CheckComponent()
+		{
+			for (auto component : m_components)
+			{
+				auto ptr{ std::dynamic_pointer_cast<T>(component) };
+
+				if (ptr != nullptr)
+				{
+					return true;
+				}
+			}
+
+
+			//return std::ranges::any_of(m_components, [](std::shared_ptr<BaseComponent> component) {
+			//	if (std::dynamic_pointer_cast<T>(component) != nullptr)
+			//	{
+			//		return true;
+			//	}
+			//	});
+
+			return false;
+		}
+
+		void Test();
 	};
 }

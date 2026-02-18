@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <chrono>
 #include "GameObject.h"
 
 namespace dae
@@ -9,11 +10,12 @@ namespace dae
 	class Scene final
 	{
 	public:
+
 		void Add(std::unique_ptr<GameObject> object);
 		void Remove(const GameObject& object);
 		void RemoveAll();
 
-		void Update();
+		void Update(const float deltaTime);
 		void Render() const;
 
 		~Scene() = default;

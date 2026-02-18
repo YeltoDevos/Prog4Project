@@ -101,6 +101,11 @@ void dae::Minigin::Run(const std::function<void()>& load)
 void dae::Minigin::RunOneFrame()
 {
 	m_quit = !InputManager::GetInstance().ProcessInput();
-	SceneManager::GetInstance().Update();
+
+	const auto currentTime = std::chrono::high_resolution_clock::now();
+	const float deltaTime{ std::chrono::duration<float>(currentTime - m_previousTimePoint).count() };
+	m_previousTimePoint = currentTime;
+
+	SceneManager::GetInstance().Update(deltaTime);
 	Renderer::GetInstance().Render();
 }
