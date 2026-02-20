@@ -3,6 +3,8 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
+#include "RenderComponent.h"
+
 dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Test()
@@ -10,13 +12,19 @@ void dae::GameObject::Test()
 
 }
 
-void dae::GameObject::Update() {}
+void dae::GameObject::Update() 
+{
+	for (auto& component : m_components)
+	{
+		component->Update();
+	}
+}
 
 void dae::GameObject::Render() const
 {
-	for (auto component : m_components)
+	for (auto& component : m_components)
 	{
-		auto ptr{ std::dynamic_pointer_cast<RenderComponent>(component) };
+		auto ptr{ dynamic_cast<RenderComponent*>(component.get()) };
 
 		if (ptr != nullptr)
 		{

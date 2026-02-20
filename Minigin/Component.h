@@ -4,21 +4,34 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include "Transform.h"
 #include "Font.h"
-#include "Texture2D.h"
 
 namespace dae
 {
+	class GameObject;
+	class Texture2D;
 	class BaseComponent
 	{
 	public:
-		BaseComponent();
+		BaseComponent(GameObject& parent);
+
+		virtual ~BaseComponent() {}
+		BaseComponent(const BaseComponent& comp) = delete;
+		BaseComponent(BaseComponent&& comp) = delete;
+		BaseComponent& operator=(const BaseComponent& comp) = delete;
+		BaseComponent& operator=(BaseComponent&& comp) = delete;
+
 
 		virtual void Update(){}
 		virtual void Render(){}
+
+		//virtual void GetParent();
+
+	protected:
+		GameObject& m_parent;
 	
 	private:
-
 	};
+
 
 	class DerivedComponent : public BaseComponent
 	{
@@ -29,43 +42,19 @@ namespace dae
 
 	};
 
+
 	class SecondDerivedComponent : public BaseComponent
 	{
 	public:
 		SecondDerivedComponent() = default;
 	};
 
+
 	class TransformComponent : public BaseComponent
 	{
 
 	};
 
-	class RenderComponent : public BaseComponent
-	{
-	public:
-		explicit RenderComponent();
-
-
-		virtual void Render() override;
-
-	private:
-		std::string m_text{"Test Test"};
-		SDL_Color m_color{ 255, 255, 255, 255 };
-		Transform m_transform{};
-		std::shared_ptr<Font> m_font{};
-		std::shared_ptr<Texture2D> m_textTexture{};
-	};
-
-	class TextComponent : public BaseComponent
-	{
-	public:
-		explicit TextComponent(std::string text);
-
-		std::string GetText();
-
-	private:
-		std::string m_Text;
-	};
 
 	class FPSComponent : public BaseComponent
 	{

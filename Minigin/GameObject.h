@@ -12,7 +12,7 @@ namespace dae
 	{
 		Transform m_transform{};
 		std::shared_ptr<Texture2D> m_texture{};
-		std::vector<std::shared_ptr<BaseComponent>> m_components{};
+		std::vector<std::unique_ptr<BaseComponent>> m_components{};
 	public:
 		virtual void Update();
 		virtual void Render() const;
@@ -27,10 +27,11 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+
 		template <std::derived_from<BaseComponent> T>
 		void AddComponent()
 		{
-			m_components.push_back(std::make_shared<T>());
+			m_components.push_back(std::make_unique<T>(*this));
 		}
 
 		template <std::derived_from<BaseComponent> T>
@@ -40,9 +41,19 @@ namespace dae
 		}
 
 		template <std::derived_from<BaseComponent> T>
-		std::shared_ptr<T> GetComponent()
+		T* GetComponent()
 		{
+			for (auto& component : m_components)
+			{
+				auto ptr{ dynamic_cast<T*>(component.get()) };
 
+				if (ptr != nullptr)
+				{
+					return ptr;
+				}
+			}
+
+			return nullptr;
 		}
 
 		template <std::derived_from<BaseComponent> T>

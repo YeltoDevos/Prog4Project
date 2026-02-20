@@ -11,6 +11,10 @@
 #include "TextObject.h"
 #include "Scene.h"
 
+#include "RenderComponent.h"
+#include "TextComponent.h"
+#include "ImageComponent.h"
+
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -21,6 +25,13 @@ static void load()
 	auto go = std::make_unique<dae::GameObject>();
 	go->SetTexture("background.png");
 	scene.Add(std::move(go));
+
+	auto background = std::make_unique<dae::GameObject>();
+	background->AddComponent<dae::ImageComponent>();
+	background->GetComponent<dae::ImageComponent>()->SetTexture("background.png");
+	background->AddComponent<dae::RenderComponent>();
+	background->GetComponent<dae::RenderComponent>()->SetTexture(background->GetComponent<dae::ImageComponent>()->GetTexture());
+	scene.Add(std::move(background));
 
 	go = std::make_unique<dae::GameObject>();
 	go->SetTexture("logo.png");
@@ -34,8 +45,12 @@ static void load()
 	scene.Add(std::move(to));
 
 	auto test = std::make_unique<dae::GameObject>();
+	test->AddComponent<dae::TextComponent>();
+	test->GetComponent<dae::TextComponent>()->SetText("Test test");
 	test->AddComponent<dae::RenderComponent>();
+	test->GetComponent<dae::RenderComponent>()->SetTexture(test->GetComponent<dae::TextComponent>()->GetTexture());
 	scene.Add(std::move(test));
+
 }
 
 int main(int, char*[]) {
