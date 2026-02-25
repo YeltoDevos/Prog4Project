@@ -2,8 +2,8 @@
 #include "Texture2D.h"
 #include "ResourceManager.h"
 
-dae::ImageComponent::ImageComponent(GameObject& parent):
-	BaseComponent(parent)
+dae::ImageComponent::ImageComponent(GameObject& owner):
+	BaseComponent(owner)
 {
 
 }

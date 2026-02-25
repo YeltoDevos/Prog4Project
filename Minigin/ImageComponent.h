@@ -6,7 +6,7 @@ namespace dae
 	class ImageComponent : public BaseComponent
 	{
 	public:
-		ImageComponent(GameObject& parent);
+		ImageComponent(GameObject& owner);
 
 		virtual void Update(const float) override{}
 

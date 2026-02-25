@@ -1,15 +1,47 @@
 #include <string>
 #include "GameObject.h"
 #include "ResourceManager.h"
-#include "Renderer.h"
-
 #include "RenderComponent.h"
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Test()
+void dae::GameObject::SetParent(GameObject* parent)
 {
+	if (IsChild(parent) || parent == this || m_parent == parent)
+		return;
+	//if(parent == nullptr)
 
+
+	if (m_parent) m_parent->RemoveChild(this);
+	m_parent = parent;
+	if (m_parent) m_parent->AddChild(this);
+
+}
+
+void dae::GameObject::AddChild(GameObject* child)
+{
+	m_Children.emplace_back(child);
+}
+
+void dae::GameObject::RemoveChild(GameObject* child)
+{
+	std::erase_if(m_Children, [child](GameObject* c) {
+		return c == child;
+		});
+}
+
+bool dae::GameObject::IsChild(GameObject* child)
+{
+	//return std::ranges::any_of(m_Children, [child](GameObject* c) {
+	//	return child == c;
+	//	});
+
+	for (GameObject* c : m_Children)
+	{
+		if (c == child)
+			return true;
+	}
+	return false;
 }
 
 void dae::GameObject::Update(const float deltaTime) 
@@ -36,11 +68,6 @@ void dae::GameObject::Render() const
 void dae::GameObject::SetTexture(const std::string& filename)
 {
 	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
 }
 
 //template <typename T>

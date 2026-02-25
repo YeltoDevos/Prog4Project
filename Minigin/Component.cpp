@@ -5,8 +5,7 @@
 #include "Texture2D.h"
 #include "GameObject.h"
 
-dae::BaseComponent::BaseComponent(GameObject& parent):
-	m_parent{parent}
+dae::BaseComponent::BaseComponent(GameObject& owner):
+	m_owner{owner}
 {
-
 }

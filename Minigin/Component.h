@@ -12,7 +12,7 @@ namespace dae
 	class BaseComponent
 	{
 	public:
-		BaseComponent(GameObject& parent);
+		BaseComponent(GameObject& owner);
 
 		virtual ~BaseComponent() {}
 		BaseComponent(const BaseComponent& comp) = delete;
@@ -21,39 +21,14 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& comp) = delete;
 
 
-		virtual void Update(const float deltaTime) {
-			deltaTime;
-		}
+		virtual void Update(const float) {}
 		virtual void Render(){}
 
 		//virtual void GetParent();
 
 	protected:
-		GameObject& m_parent;
+		GameObject& m_owner;
 	
 	private:
-	};
-
-
-	class DerivedComponent : public BaseComponent
-	{
-	public:
-		DerivedComponent() = default;
-
-	private:
-
-	};
-
-
-	class SecondDerivedComponent : public BaseComponent
-	{
-	public:
-		SecondDerivedComponent() = default;
-	};
-
-
-	class TransformComponent : public BaseComponent
-	{
-
 	};
 }

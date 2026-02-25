@@ -6,7 +6,7 @@ namespace dae
 	class TextComponent : public BaseComponent
 	{
 	public:
-		explicit TextComponent(GameObject& parent);
+		explicit TextComponent(GameObject& owner);
 
 		virtual void Update(const float) override;
 

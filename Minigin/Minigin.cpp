@@ -108,6 +108,10 @@ void dae::Minigin::RunOneFrame()
 	const float deltaTime{ std::chrono::duration<float>(currentTime - m_previousTimePoint).count() };
 	m_previousTimePoint = currentTime;
 
+
 	SceneManager::GetInstance().Update(deltaTime);
 	Renderer::GetInstance().Render();
+
+
+	//const auto sleepTime{ std::chrono::duration_cast<std::chrono::milliseconds>(currentTime + std::chrono::milliseconds(16) - std::chrono::high_resolution_clock::now())};
 }

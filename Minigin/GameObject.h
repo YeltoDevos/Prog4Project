@@ -8,17 +8,18 @@
 namespace dae
 {
 	class Texture2D;
-	class GameObject
+	class GameObject final
 	{
-		Transform m_transform{};
 		std::shared_ptr<Texture2D> m_texture{};
 		std::vector<std::unique_ptr<BaseComponent>> m_components{};
+		GameObject* m_parent;
+		std::vector<GameObject*> m_Children{};
+
 	public:
 		virtual void Update(const float deltaTime);
 		virtual void Render() const;
 
 		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -26,6 +27,11 @@ namespace dae
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
+
+		virtual void SetParent(GameObject* parent);
+		void AddChild(GameObject* child);
+		void RemoveChild(GameObject* child);
+		bool IsChild(GameObject* child);
 
 
 		template <std::derived_from<BaseComponent> T>
@@ -59,7 +65,7 @@ namespace dae
 		template <std::derived_from<BaseComponent> T>
 		bool CheckComponent()
 		{
-			for (auto component : m_components)
+			for (const auto& component : m_components)
 			{
 				auto ptr{ std::dynamic_pointer_cast<T>(component) };
 
@@ -79,7 +85,5 @@ namespace dae
 
 			return false;
 		}
-
-		void Test();
 	};
 }

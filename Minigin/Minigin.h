@@ -21,5 +21,7 @@ namespace dae
 
 	private:
 		std::chrono::high_resolution_clock::time_point m_previousTimePoint{};
+
+		//float m_accumulatedTime{};
 	};
 }

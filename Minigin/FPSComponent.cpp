@@ -21,7 +21,7 @@ void dae::FPSComponent::Update(const float deltaTime)
 		return;
 	}
 
-	auto textComponent{ m_parent.GetComponent<dae::TextComponent>() };
+	auto textComponent{ m_owner.GetComponent<dae::TextComponent>() };
 
 	if (textComponent != nullptr)
 	{
@@ -33,7 +33,7 @@ void dae::FPSComponent::Update(const float deltaTime)
 		
 		if(fpsString != m_text)
 		{
-			textComponent->SetText(fpsString);
+			textComponent->SetText(fpsString + " FPS");
 			m_text = fpsString;
 		}
 	}

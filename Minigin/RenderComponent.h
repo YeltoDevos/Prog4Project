@@ -6,7 +6,7 @@ namespace dae
 	class RenderComponent : public BaseComponent
 	{
 	public:
-		explicit RenderComponent(GameObject& parent);
+		explicit RenderComponent(GameObject& owner);
 
 		virtual void Update(const float) override;
 		virtual void Render() override;
@@ -14,7 +14,7 @@ namespace dae
 		void SetTexture(std::shared_ptr<Texture2D> Texture);
 
 	private:
-		Transform m_transform{};
+		//Transform m_transform{};
 		std::shared_ptr<Texture2D> m_textTexture{};
 	};
 }

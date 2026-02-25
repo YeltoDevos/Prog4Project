@@ -15,6 +15,7 @@
 #include "TextComponent.h"
 #include "ImageComponent.h"
 #include "FPSComponent.h"
+#include "TranslateComponents.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -23,34 +24,45 @@ static void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene();
 
-	auto go = std::make_unique<dae::GameObject>();
-	go->SetTexture("background.png");
-	scene.Add(std::move(go));
-
-	auto background = std::make_unique<dae::GameObject>();
+	auto background{ std::make_unique<dae::GameObject>() };
 	background->AddComponent<dae::ImageComponent>();
 	background->GetComponent<dae::ImageComponent>()->SetTexture("background.png");
 	background->AddComponent<dae::RenderComponent>();
 	background->GetComponent<dae::RenderComponent>()->SetTexture(background->GetComponent<dae::ImageComponent>()->GetTexture());
 	scene.Add(std::move(background));
 
-	go = std::make_unique<dae::GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(358, 180);
-	scene.Add(std::move(go));
+	auto logo{ std::make_unique<dae::GameObject>() };
+	logo->AddComponent<dae::ImageComponent>();
+	logo->GetComponent<dae::ImageComponent>()->SetTexture("logo.png");
+	logo->AddComponent<dae::TransformComponent>();
+	logo->GetComponent<dae::TransformComponent>()->SetPosition(358, 180);
+	logo->AddComponent<dae::RenderComponent>();
+	logo->GetComponent<dae::RenderComponent>()->SetTexture(logo->GetComponent<dae::ImageComponent>()->GetTexture());
+	scene.Add(std::move(logo));
 
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_unique<dae::TextObject>("Programming 4 Assignment", font);
-	to->SetColor({ 255, 255, 0, 255 });
-	to->SetPosition(292, 20);
-	scene.Add(std::move(to));
+	auto title{ std::make_unique<dae::GameObject>() };
+	title->AddComponent<dae::TextComponent>();
+	title->GetComponent<dae::TextComponent>()->SetText("Programming 4 Assignment");
+	title->AddComponent<dae::TransformComponent>();
+	title->GetComponent<dae::TransformComponent>()->SetPosition(292, 20);
+	title->AddComponent<dae::RenderComponent>();
+	scene.Add(std::move(title));
 
-	auto test = std::make_unique<dae::GameObject>();
-	test->AddComponent<dae::FPSComponent>();
-	test->AddComponent<dae::TextComponent>();
-	test->AddComponent<dae::RenderComponent>();
-	test->GetComponent<dae::RenderComponent>()->SetTexture(test->GetComponent<dae::TextComponent>()->GetTexture());
-	scene.Add(std::move(test));
+	auto fps{ std::make_unique<dae::GameObject>() };
+	fps->AddComponent<dae::FPSComponent>();
+	fps->AddComponent<dae::TextComponent>();
+	fps->AddComponent<dae::RenderComponent>();
+	fps->GetComponent<dae::RenderComponent>()->SetTexture(fps->GetComponent<dae::TextComponent>()->GetTexture());
+	scene.Add(std::move(fps));
+
+	auto player{ std::make_unique<dae::GameObject>() };
+	player->AddComponent<dae::ImageComponent>();
+	player->GetComponent<dae::ImageComponent>()->SetTexture("PeterPepper.png");
+	player->AddComponent<dae::TransformComponent>();
+	player->GetComponent<dae::TransformComponent>()->SetPosition(250, 400);
+	player->AddComponent<dae::RenderComponent>();
+	player->GetComponent<dae::RenderComponent>()->SetTexture(player->GetComponent<dae::ImageComponent>()->GetTexture());
+	scene.Add(std::move(player));
 
 }
 

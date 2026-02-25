@@ -5,8 +5,8 @@
 #include "GameObject.h"
 #include "RenderComponent.h"
 
-dae::TextComponent::TextComponent(GameObject& parent):
-	BaseComponent(parent)
+dae::TextComponent::TextComponent(GameObject& owner):
+	BaseComponent(owner)
 {
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	m_font = std::move(font);
@@ -16,7 +16,7 @@ dae::TextComponent::TextComponent(GameObject& parent):
 
 void dae::TextComponent::Update(const float)
 {
-	const auto renderer{ m_parent.GetComponent<dae::RenderComponent>() };
+	const auto renderer{ m_owner.GetComponent<dae::RenderComponent>() };
 	if (renderer != nullptr)
 	{
 		renderer->SetTexture(m_textTexture);
