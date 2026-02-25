@@ -12,23 +12,23 @@ namespace dae
 	{
 		std::shared_ptr<Texture2D> m_texture{};
 		std::vector<std::unique_ptr<BaseComponent>> m_components{};
-		GameObject* m_parent;
+		GameObject* m_parent{ nullptr };
 		std::vector<GameObject*> m_Children{};
 
 	public:
-		virtual void Update(const float deltaTime);
-		virtual void Render() const;
+		void Update(const float deltaTime);
+		void Render() const;
 
 		void SetTexture(const std::string& filename);
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-		virtual void SetParent(GameObject* parent);
+		void SetParent(GameObject* parent);
 		void AddChild(GameObject* child);
 		void RemoveChild(GameObject* child);
 		bool IsChild(GameObject* child);
