@@ -14,7 +14,7 @@ namespace dae
 		std::shared_ptr<Texture2D> m_texture{};
 		std::vector<std::unique_ptr<BaseComponent>> m_components{};
 	public:
-		virtual void Update();
+		virtual void Update(const float deltaTime);
 		virtual void Render() const;
 
 		void SetTexture(const std::string& filename);

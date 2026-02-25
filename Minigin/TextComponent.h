@@ -8,7 +8,7 @@ namespace dae
 	public:
 		explicit TextComponent(GameObject& parent);
 
-		virtual void Update() override;
+		virtual void Update(const float) override;
 
 		void SetText(const std::string& text);
 		std::string GetText();

@@ -14,10 +14,8 @@ dae::TextComponent::TextComponent(GameObject& parent):
 	SetText("Empty");
 }
 
-void dae::TextComponent::Update()
+void dae::TextComponent::Update(const float)
 {
-	SetText("update TextComponent text");
-
 	const auto renderer{ m_parent.GetComponent<dae::RenderComponent>() };
 	if (renderer != nullptr)
 	{

@@ -21,7 +21,9 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& comp) = delete;
 
 
-		virtual void Update(){}
+		virtual void Update(const float deltaTime) {
+			deltaTime;
+		}
 		virtual void Render(){}
 
 		//virtual void GetParent();
@@ -51,12 +53,6 @@ namespace dae
 
 
 	class TransformComponent : public BaseComponent
-	{
-
-	};
-
-
-	class FPSComponent : public BaseComponent
 	{
 
 	};

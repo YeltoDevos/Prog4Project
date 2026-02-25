@@ -14,6 +14,7 @@
 #include "RenderComponent.h"
 #include "TextComponent.h"
 #include "ImageComponent.h"
+#include "FPSComponent.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -45,8 +46,8 @@ static void load()
 	scene.Add(std::move(to));
 
 	auto test = std::make_unique<dae::GameObject>();
+	test->AddComponent<dae::FPSComponent>();
 	test->AddComponent<dae::TextComponent>();
-	test->GetComponent<dae::TextComponent>()->SetText("Test test");
 	test->AddComponent<dae::RenderComponent>();
 	test->GetComponent<dae::RenderComponent>()->SetTexture(test->GetComponent<dae::TextComponent>()->GetTexture());
 	scene.Add(std::move(test));

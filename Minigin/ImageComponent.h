@@ -8,7 +8,7 @@ namespace dae
 	public:
 		ImageComponent(GameObject& parent);
 
-		virtual void Update() override{}
+		virtual void Update(const float) override{}
 
 		void SetTexture(const std::string& filename);
 		std::shared_ptr<Texture2D> GetTexture();

@@ -28,19 +28,10 @@ void Scene::RemoveAll()
 
 void Scene::Update(const float deltaTime)
 {
-	deltaTime;
-
 	for(auto& object : m_objects)
 	{
-		object->Update();	
+		object->Update(deltaTime);	
 	}
-
-	//GameObject bla{};
-
-	//bla.AddComponent<DerivedComponent>();
-
-	//bool check{ bla.CheckComponent<SecondDerivedComponent>() };
-	//check;
 }
 
 void Scene::Render() const

@@ -8,7 +8,7 @@ namespace dae
 	public:
 		explicit RenderComponent(GameObject& parent);
 
-		virtual void Update() override;
+		virtual void Update(const float) override;
 		virtual void Render() override;
 
 		void SetTexture(std::shared_ptr<Texture2D> Texture);

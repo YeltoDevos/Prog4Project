@@ -77,6 +77,8 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 
 	Renderer::GetInstance().Init(g_window);
 	ResourceManager::GetInstance().Init(dataPath);
+
+	m_previousTimePoint = std::chrono::high_resolution_clock::now();
 }
 
 dae::Minigin::~Minigin()
